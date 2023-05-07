@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>Image Slider</title>
+
+	<link rel="stylesheet" href="style.css" />
+
+	<script src="jquery v1.11.0.js"></script>
+	<script src="jquery migrate v1.2.js"></script>
+</head>
+
+<body>
+
+
+<div class="galleryContainer">
+	<h1> Image Slider</h1>
+	<p></p>
+
+	<div class="galleryThumbnailsContainer">
+		<div class="galleryThumbnails">
+<a href="javascript: changeimage(1)" class="thumbnailsimage1"><img src="images/thumbs/image1.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(2)" class="thumbnailsimage2"><img src="images/thumbs/image2.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(3)" class="thumbnailsimage3"><img src="images/thumbs/image3.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(4)" class="thumbnailsimage4"><img src="images/thumbs/image4.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(5)" class="thumbnailsimage5"><img src="images/thumbs/image5.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(6)" class="thumbnailsimage6"><img src="images/thumbs/image6.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(7)" class="thumbnailsimage7"><img src="images/thumbs/image7.jpg" width="auto" height="100" alt="" /></a><a href="javascript: changeimage(8)" class="thumbnailsimage8"><img src="images/thumbs/image8.jpg" width="auto" height="100" alt="" /></a>		</div>
+	</div>
+
+	<div class="galleryPreviewContainer">
+		<div class="galleryPreviewImage">
+			<img class="previewImage1" src="images/image1.jpg" width="900" height="auto" alt="" /><img class="previewImage2" src="images/image2.jpg" width="900" height="auto" alt="" /><img class="previewImage3" src="images/image3.jpg" width="900" height="auto" alt="" /><img class="previewImage4" src="images/image4.jpg" width="900" height="auto" alt="" /><img class="previewImage5" src="images/image5.jpg" width="900" height="auto" alt="" /><img class="previewImage6" src="images/image6.jpg" width="900" height="auto" alt="" /><img class="previewImage7" src="images/image7.jpg" width="900" height="auto" alt="" /><img class="previewImage8" src="images/image8.jpg" width="900" height="auto" alt="" />		</div>
+
+		<div class="galleryPreviewArrows">
+			<a href="#" class="previousSlideArrow">&lt;</a>
+			<a href="#" class="nextSlideArrow">&gt;</a>
+		</div>
+	</div>
+
+	<div class="galleryNavigationBullets">
+		<a href="javascript: changeimage(1)" class="galleryBullet1"><span>Bullet</span></a> <a href="javascript: changeimage(2)" class="galleryBullet2"><span>Bullet</span></a> <a href="javascript: changeimage(3)" class="galleryBullet3"><span>Bullet</span></a> <a href="javascript: changeimage(4)" class="galleryBullet4"><span>Bullet</span></a> <a href="javascript: changeimage(5)" class="galleryBullet5"><span>Bullet</span></a> <a href="javascript: changeimage(6)" class="galleryBullet6"><span>Bullet</span></a> <a href="javascript: changeimage(7)" class="galleryBullet7"><span>Bullet</span></a> <a href="javascript: changeimage(8)" class="galleryBullet8"><span>Bullet</span></a> 	</div>
+</div>
+
+<script type="text/javascript">
+// init variables
+var imagesTotal = 8;
+var currentImage = 1;
+var thumbsTotalWidth = 0;
+
+$('a.galleryBullet' + currentImage).addClass("active");
+$('a.thumbnailsimage' + currentImage).addClass("active");
+
+
+// SET WIDTH for THUMBNAILS CONTAINER
+$(window).load(function() {
+	$('.galleryThumbnails a img').each(function() {
+		thumbsTotalWidth += $(this).width() + 10 + 8;
+	});
+	$('.galleryThumbnails').width(thumbsTotalWidth);
+});
+
+
+// PREVIOUS ARROW CODE
+$('a.previousSlideArrow').click(function() {
+	$('img.previewImage' + currentImage).hide();
+	$('a.galleryBullet' + currentImage).removeClass("active");
+	$('a.thumbnailsimage' + currentImage).removeClass("active");
+
+	currentImage--;
+
+	if (currentImage == 0) {
+		currentImage = imagesTotal;
+	}
+
+	$('a.galleryBullet' + currentImage).addClass("active");
+	$('a.thumbnailsimage' + currentImage).addClass("active");
+	$('img.previewImage' + currentImage).show();
+
+	return false;
+});
+// ===================
+
+
+// NEXT ARROW CODE
+$('a.nextSlideArrow').click(function() {
+	$('img.previewImage' + currentImage).hide();
+	$('a.galleryBullet' + currentImage).removeClass("active");
+	$('a.thumbnailsimage' + currentImage).removeClass("active");
+
+	currentImage++;
+
+	if (currentImage == imagesTotal + 1) {
+		currentImage = 1;
+	}
+
+	$('a.galleryBullet' + currentImage).addClass("active");
+	$('a.thumbnailsimage' + currentImage).addClass("active");
+	$('img.previewImage' + currentImage).show();
+
+	return false;
+});
+// ===================
+
+
+// BULLETS CODE
+function changeimage(imageNumber) {
+	$('img.previewImage' + currentImage).hide();
+	currentImage = imageNumber;
+	$('img.previewImage' + imageNumber).show();
+	$('.galleryNavigationBullets a').removeClass("active");
+	$('.galleryThumbnails a').removeClass("active");
+	$('a.galleryBullet' + imageNumber).addClass("active");
+	$('a.thumbnailsimage' + currentImage).addClass("active");
+}
+// ===================
+
+
+// AUTOMATIC CHANGE SLIDES
+function autoChangeSlides() {
+	$('img.previewImage' + currentImage).hide();
+	$('a.galleryBullet' + currentImage).removeClass("active");
+	$('a.thumbnailsimage' + currentImage).removeClass("active");
+
+	currentImage++;
+
+	if (currentImage == imagesTotal + 1) {
+		currentImage = 1;
+	}
+
+	$('a.galleryBullet' + currentImage).addClass("active");
+	$('a.thumbnailsimage' + currentImage).addClass("active");
+	$('img.previewImage' + currentImage).show();
+}
+
+var slideTimer = setInterval(function() {autoChangeSlides(); }, 5000);
+</script>
+
+
+</body>
+</html>
